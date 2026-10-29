@@ -1,0 +1,57 @@
+
+CSE382 - Classification Baseline Results
+========================================
+
+Dataset: H2 City Hotel Booking Demand
+Total bookings: 79,330
+Target: IsCanceled
+
+Model:
+Logistic Regression (untuned)
+
+Prediction point:
+Booking creation
+
+Features:
+19 provisionally approved booking-time features
+
+Data Split:
+Training: 63,174 bookings
+Testing: 16,156 bookings
+
+Training Cancellation Rate: 41.61%
+Testing Cancellation Rate: 42.18%
+
+Overlapping Feature Groups: 0
+
+TRAINING RESULTS
+----------------
+Accuracy:  0.7643
+Precision: 0.7674
+Recall:    0.6221
+F1-score:  0.6872
+
+Confusion Matrix:
+[[31929, 4957],
+ [ 9933, 16355]]
+
+5-FOLD CROSS-VALIDATION
+-----------------------
+Accuracy:  0.7609 (std: 0.0087)
+Precision: 0.7629 (std: 0.0129)
+Recall:    0.6175 (std: 0.0171)
+F1-score:  0.6824 (std: 0.0133)
+ROC-AUC:   0.8342 (std: 0.0078)
+PR-AUC:    0.8163 (std: 0.0084)
+
+Validation:
+StratifiedGroupKFold, 5 folds
+Grouping based on identical predictor rows
+
+Notes:
+- Test set reserved for final evaluation.
+- No hyperparameter tuning performed.
+- Preprocessing fitted separately within each CV fold.
+- Duplicate handling and feature availability require
+  final documentation and team agreement.
+========================================
