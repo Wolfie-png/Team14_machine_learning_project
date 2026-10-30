@@ -34,12 +34,18 @@ LEAKAGE_FEATURES = [
     "ReservationStatusDate",
 ]
 
-# Features requiring further verification
-REVIEW_FEATURES = [
-    "DepositType",
-    "Agent",
-    "Company",
-    "ADR",
-    "RequiredCarParkingSpaces",
-    "TotalOfSpecialRequests",
+# Decided after checking cancellation rate per value on H2.csv
+KEEP_AFTER_REVIEW = [
+    "Agent",                     # real signal, known at booking time
+]
+
+DROPPED_AFTER_REVIEW = [
+    "RequiredCarParkingSpaces",  # 0% cancellations when >=1 space -> leaks outcome
+    "ADR",                       # almost no difference between classes
+    "DepositType",               # Non Refund cancels 99.8% -> likely set from outcome
+]
+
+STILL_UNDECIDED = [
+    "TotalOfSpecialRequests",    # strong, but accumulates over time; discuss with teammate
+    "Company",                   # not checked yet
 ]
