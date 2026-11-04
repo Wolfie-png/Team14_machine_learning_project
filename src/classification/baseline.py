@@ -9,6 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import (
     StratifiedGroupKFold,
     cross_validate,
+    cross_val_predict,
 )
 from sklearn.metrics import (
     accuracy_score,
@@ -74,43 +75,10 @@ def train_baseline():
 
     print("Model trained successfully!")
 
-    # ==========================================
-    # 4. TRAINING PREDICTIONS
-    # ==========================================
 
-    y_pred = model.predict(X_train)
 
     # ==========================================
-    # 5. TRAINING METRICS
-    # ==========================================
-
-    print("\n===== BASELINE TRAINING METRICS =====")
-
-    print(
-        "Accuracy:",
-        round(accuracy_score(y_train, y_pred), 4)
-    )
-
-    print(
-        "Precision:",
-        round(precision_score(y_train, y_pred), 4)
-    )
-
-    print(
-        "Recall:",
-        round(recall_score(y_train, y_pred), 4)
-    )
-
-    print(
-        "F1 Score:",
-        round(f1_score(y_train, y_pred), 4)
-    )
-
-    print("\nConfusion Matrix:")
-    print(confusion_matrix(y_train, y_pred))
-
-    # ==========================================
-    # 6. GROUPED CROSS-VALIDATION
+    # 4. GROUPED CROSS-VALIDATION
     # ==========================================
 
     print("\n===== 5-FOLD CROSS-VALIDATION =====")
@@ -148,7 +116,7 @@ def train_baseline():
     )
 
     # ==========================================
-    # 7. DISPLAY CROSS-VALIDATION RESULTS
+    # 5. DISPLAY CROSS-VALIDATION RESULTS
     # ==========================================
 
     print("\n===== CROSS-VALIDATION RESULTS =====")
@@ -170,14 +138,27 @@ def train_baseline():
             f"(std: {values.std():.4f})"
         )
 
+    # Out-of-fold cross-validated confusion matrix
+    print("\n===== VALIDATION CONFUSION MATRIX =====")
+    oof_preds = cross_val_predict(
+        model,
+        X_train,
+        y_train,
+        groups=groups,
+        cv=cv,
+        n_jobs=1,
+    )
+    print(confusion_matrix(y_train, oof_preds))
+
     print("\nCross-validation completed successfully!")
 
     # Return model for future use
     return model
 
 
+
 # ==========================================
-# 8. RUN SCRIPT
+# 6. RUN SCRIPT
 # ==========================================
 
 if __name__ == "__main__":
